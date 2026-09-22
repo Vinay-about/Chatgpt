@@ -2,578 +2,521 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ChatGPT — VINAY PRIME</title>
+<title>ChatGPT</title>
 
 <style>
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Inter,Arial,sans-serif;
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+:root{
+  --bg:#ffffff;
+  --sidebar:#f7f7f8;
+  --border:#e5e5e5;
+  --text:#171717;
+  --muted:#6b6b6b;
+  --black:#111111;
 }
 
 body{
-    background:#fff;
-    color:#171717;
-    height:100vh;
-    overflow:hidden;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",
+  Roboto,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  height:100vh;
+  overflow:hidden;
+}
+
+button,
+textarea,
+input{
+  font-family:inherit;
 }
 
 /* APP */
+
 .app{
-    display:flex;
-    width:100%;
-    height:100vh;
+  width:100%;
+  height:100vh;
+  display:flex;
 }
 
 /* SIDEBAR */
+
 .sidebar{
-    width:265px;
-    background:#f7f7f8;
-    border-right:1px solid #e5e5e5;
-    display:flex;
-    flex-direction:column;
-    padding:12px;
-    transition:.25s;
-    z-index:100;
+  width:270px;
+  height:100vh;
+  background:var(--sidebar);
+  border-right:1px solid var(--border);
+  display:flex;
+  flex-direction:column;
+  padding:14px;
+  z-index:100;
+  transition:.25s ease;
 }
 
-.logo-area{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    padding:10px 8px 18px;
+.brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:7px 5px 18px;
 }
 
-.logo-area img{
-    width:38px;
-    height:38px;
-    border-radius:11px;
-    object-fit:cover;
+.logo{
+  width:40px;
+  height:40px;
+  border-radius:12px;
+  object-fit:cover;
+  background:#111;
 }
 
-.logo-area strong{
-    font-size:17px;
-    font-weight:700;
+.brand-title{
+  font-size:17px;
+  font-weight:700;
 }
 
-/* NEW CHAT */
+.brand-sub{
+  font-size:11px;
+  color:#777;
+  margin-top:2px;
+}
+
 .new-chat{
-    border:1px solid #ddd;
-    background:#fff;
-    height:45px;
-    border-radius:10px;
-    display:flex;
-    align-items:center;
-    gap:10px;
-    padding:0 13px;
-    cursor:pointer;
-    font-size:14px;
-    font-weight:600;
-    transition:.2s;
+  width:100%;
+  padding:12px;
+  border-radius:12px;
+  border:1px solid #ddd;
+  background:#fff;
+  font-size:14px;
+  font-weight:600;
+  cursor:pointer;
+  margin-bottom:12px;
 }
 
 .new-chat:hover{
-    background:#eee;
+  background:#eee;
 }
 
-/* SEARCH */
 .search{
-    margin-top:12px;
-    background:#fff;
-    border:1px solid #e2e2e2;
-    border-radius:9px;
-    height:40px;
-    display:flex;
-    align-items:center;
-    padding:0 11px;
-    gap:8px;
+  width:100%;
+  border:1px solid #ddd;
+  background:#fff;
+  border-radius:11px;
+  padding:10px 12px;
+  outline:none;
+  margin-bottom:12px;
 }
 
-.search input{
-    border:0;
-    outline:0;
-    background:transparent;
-    width:100%;
-    font-size:13px;
-}
-
-/* HISTORY */
-.history-label{
-    font-size:11px;
-    color:#777;
-    font-weight:700;
-    margin:20px 8px 8px;
-    text-transform:uppercase;
+.history-title{
+  color:#888;
+  font-size:11px;
+  font-weight:700;
+  text-transform:uppercase;
+  padding:7px 5px;
 }
 
 .history{
-    flex:1;
-    overflow-y:auto;
+  flex:1;
+  overflow-y:auto;
 }
 
 .history-item{
-    padding:10px;
-    border-radius:8px;
-    font-size:13px;
-    color:#444;
-    cursor:pointer;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
+  padding:10px;
+  border-radius:9px;
+  cursor:pointer;
+  font-size:13px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 
 .history-item:hover{
-    background:#e9e9e9;
+  background:#e9e9e9;
 }
 
-.no-history{
-    color:#999;
-    font-size:12px;
-    padding:10px;
-}
-
-/* FOOTER */
 .sidebar-footer{
-    border-top:1px solid #ddd;
-    padding:13px 7px 4px;
-    font-size:9px;
-    line-height:1.8;
-    color:#777;
-}
-
-.sidebar-footer b{
-    color:#222;
+  border-top:1px solid #ddd;
+  padding-top:12px;
+  color:#777;
+  font-size:10px;
+  line-height:1.7;
 }
 
 /* MAIN */
+
 .main{
-    flex:1;
-    min-width:0;
-    display:flex;
-    flex-direction:column;
+  flex:1;
+  min-width:0;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
 }
 
-/* HEADER */
 .header{
-    height:62px;
-    border-bottom:1px solid #e8e8e8;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 22px;
-    background:#fff;
+  height:60px;
+  min-height:60px;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 18px;
 }
 
 .header-left{
-    display:flex;
-    align-items:center;
-    gap:10px;
+  display:flex;
+  align-items:center;
+  gap:12px;
 }
 
-.menu{
-    display:none;
-    background:none;
-    border:0;
-    font-size:22px;
-    cursor:pointer;
+.menu-btn{
+  display:none;
+  border:0;
+  background:transparent;
+  font-size:23px;
+  cursor:pointer;
 }
 
-.header-logo{
-    width:32px;
-    height:32px;
-    border-radius:9px;
-    object-fit:cover;
+.header-title{
+  font-size:16px;
+  font-weight:700;
 }
 
-.header-name{
-    font-size:15px;
-    font-weight:700;
-}
-
-.online{
-    color:#16a34a;
-    font-size:10px;
-    margin-top:2px;
+.status{
+  font-size:12px;
+  color:#777;
 }
 
 /* CHAT */
+
 .chat{
-    flex:1;
-    overflow-y:auto;
-    padding:30px 18px 150px;
+  flex:1;
+  overflow-y:auto;
+  padding:20px 15px 160px;
 }
 
 .chat-inner{
-    max-width:820px;
-    margin:auto;
+  max-width:850px;
+  margin:auto;
 }
 
 /* WELCOME */
+
 .welcome{
-    min-height:62vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    text-align:center;
+  min-height:48vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
 }
 
 .welcome-logo{
-    width:76px;
-    height:76px;
-    border-radius:22px;
-    object-fit:cover;
-    box-shadow:0 10px 30px rgba(0,0,0,.12);
-    margin-bottom:20px;
+  width:68px;
+  height:68px;
+  border-radius:19px;
+  object-fit:cover;
+  margin-bottom:20px;
 }
 
 .welcome h1{
-    font-size:38px;
-    letter-spacing:-1.5px;
+  font-size:31px;
+  margin-bottom:8px;
 }
 
 .welcome p{
-    max-width:550px;
-    color:#777;
-    line-height:1.6;
-    font-size:14px;
-    margin-top:10px;
+  color:#777;
+  font-size:14px;
 }
 
-.cards{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
-    width:100%;
-    max-width:650px;
-    margin-top:28px;
+/* SUGGESTIONS */
+
+.suggestions{
+  max-width:850px;
+  margin:0 auto 20px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
 }
 
-.card{
-    border:1px solid #e2e2e2;
-    background:#fff;
-    border-radius:13px;
-    padding:16px;
-    text-align:left;
-    cursor:pointer;
-    transition:.2s;
+.suggestion{
+  border:1px solid #ddd;
+  background:#fff;
+  border-radius:14px;
+  padding:15px;
+  text-align:left;
+  cursor:pointer;
+  transition:.2s;
 }
 
-.card:hover{
-    background:#fafafa;
-    border-color:#bbb;
-    transform:translateY(-1px);
+.suggestion:hover{
+  background:#f7f7f7;
+  transform:translateY(-1px);
 }
 
-.card-icon{
-    font-size:20px;
-    margin-bottom:9px;
+.suggestion b{
+  display:block;
+  font-size:14px;
+  margin-bottom:5px;
 }
 
-.card b{
-    font-size:13px;
-}
-
-.card small{
-    display:block;
-    color:#777;
-    margin-top:5px;
-    font-size:11px;
+.suggestion span{
+  color:#777;
+  font-size:12px;
 }
 
 /* MESSAGE */
+
 .message{
-    display:flex;
-    gap:12px;
-    margin-bottom:28px;
+  display:flex;
+  gap:12px;
+  margin:23px 0;
 }
 
 .avatar{
-    width:34px;
-    height:34px;
-    flex-shrink:0;
-    border-radius:10px;
-    object-fit:cover;
+  width:35px;
+  height:35px;
+  min-width:35px;
+  border-radius:10px;
+  background:#111;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:11px;
+  font-weight:700;
 }
 
-.user-avatar{
-    background:#111;
-    color:white;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:10px;
-    font-weight:700;
+.message.user .avatar{
+  background:#e9e9e9;
+  color:#222;
 }
 
-.message-body{
-    min-width:0;
-    flex:1;
+.message-content{
+  max-width:calc(100% - 48px);
+  line-height:1.65;
+  font-size:15px;
+  overflow-wrap:anywhere;
 }
 
 .message-name{
-    font-size:12px;
-    font-weight:700;
-    margin-bottom:7px;
-}
-
-.message-text{
-    font-size:14px;
-    line-height:1.7;
-    white-space:pre-wrap;
-    overflow-wrap:anywhere;
+  font-size:12px;
+  font-weight:700;
+  margin-bottom:4px;
 }
 
 /* CODE */
-.code{
-    margin:12px 0;
-    background:#171717;
-    border-radius:11px;
-    overflow:hidden;
-    color:#eee;
+
+.message-content pre{
+  background:#111;
+  color:#eee;
+  border-radius:12px;
+  padding:15px;
+  margin:12px 0;
+  overflow-x:auto;
+  font-family:Consolas,monospace;
+  font-size:13px;
+  line-height:1.5;
 }
 
-.code-top{
-    height:38px;
-    background:#222;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:0 10px;
-    color:#aaa;
-    font-size:11px;
-}
-
-.copy{
-    border:0;
-    background:#3a3a3a;
-    color:#fff;
-    padding:6px 10px;
-    border-radius:6px;
-    cursor:pointer;
-    font-size:10px;
-}
-
-.code pre{
-    padding:14px;
-    overflow:auto;
-    font-family:monospace;
-    font-size:12px;
-    line-height:1.6;
+.inline-code{
+  background:#eee;
+  border-radius:5px;
+  padding:2px 5px;
+  font-family:Consolas,monospace;
 }
 
 /* IMAGE */
-.chat-image{
-    max-width:300px;
-    max-height:280px;
-    border-radius:12px;
-    margin-top:8px;
-    border:1px solid #ddd;
+
+.message-image{
+  display:block;
+  max-width:280px;
+  max-height:280px;
+  object-fit:contain;
+  border-radius:13px;
+  margin-bottom:10px;
+  border:1px solid #ddd;
 }
 
-/* TYPING */
-.typing{
-    display:flex;
-    gap:5px;
-    padding:7px 0;
+.upload-preview{
+  display:none;
+  max-width:160px;
+  max-height:110px;
+  object-fit:cover;
+  border-radius:11px;
+  margin:3px 0 8px 45px;
+  border:1px solid #ddd;
 }
 
-.typing i{
-    width:6px;
-    height:6px;
-    background:#999;
-    border-radius:50%;
-    animation:dot 1s infinite;
-}
+/* COMPOSER */
 
-.typing i:nth-child(2){
-    animation-delay:.15s;
-}
-
-.typing i:nth-child(3){
-    animation-delay:.3s;
-}
-
-@keyframes dot{
-    0%,80%,100%{
-        transform:translateY(0);
-        opacity:.3;
-    }
-    40%{
-        transform:translateY(-5px);
-        opacity:1;
-    }
-}
-
-/* INPUT */
-.input-area{
-    position:fixed;
-    left:265px;
-    right:0;
-    bottom:0;
-    padding:14px 18px 18px;
-    background:linear-gradient(
-        transparent,
-        #fff 22%
-    );
+.composer-area{
+  position:fixed;
+  left:270px;
+  right:0;
+  bottom:0;
+  padding:12px 15px 18px;
+  background:linear-gradient(
+    transparent,
+    rgba(255,255,255,.97) 30%
+  );
 }
 
 .composer{
-    max-width:820px;
-    margin:auto;
-    background:#fff;
-    border:1px solid #d8d8d8;
-    border-radius:17px;
-    box-shadow:0 5px 25px rgba(0,0,0,.07);
+  max-width:850px;
+  margin:auto;
+  background:#fff;
+  border:1px solid #d7d7d7;
+  border-radius:18px;
+  padding:8px;
+  box-shadow:0 5px 25px rgba(0,0,0,.08);
 }
 
-/* PREVIEW */
-.preview{
-    display:none;
-    padding:10px;
-    border-bottom:1px solid #eee;
+.tools{
+  display:flex;
+  align-items:flex-end;
+  gap:8px;
 }
 
-.preview-wrap{
-    position:relative;
-    display:inline-block;
+.icon-btn{
+  width:40px;
+  height:40px;
+  min-width:40px;
+  border:0;
+  background:#f1f1f1;
+  border-radius:11px;
+  cursor:pointer;
+  font-size:21px;
 }
 
-.preview img{
-    width:70px;
-    height:70px;
-    border-radius:10px;
-    object-fit:cover;
+.icon-btn:hover{
+  background:#e8e8e8;
 }
 
-.remove{
-    position:absolute;
-    top:-7px;
-    right:-7px;
-    width:21px;
-    height:21px;
-    border:0;
-    border-radius:50%;
-    background:#111;
-    color:#fff;
-    cursor:pointer;
+#messageInput{
+  flex:1;
+  min-height:40px;
+  max-height:140px;
+  resize:none;
+  border:0;
+  outline:none;
+  background:transparent;
+  padding:10px 4px;
+  font-size:15px;
 }
 
-/* COMPOSER ROW */
-.composer-row{
-    display:flex;
-    align-items:flex-end;
-    gap:8px;
-    padding:10px;
+.send-btn{
+  width:40px;
+  height:40px;
+  min-width:40px;
+  border:0;
+  border-radius:11px;
+  background:#111;
+  color:#fff;
+  cursor:pointer;
+  font-size:18px;
 }
 
-.attach{
-    width:39px;
-    height:39px;
-    border:0;
-    background:#f1f1f1;
-    border-radius:10px;
-    cursor:pointer;
-    font-size:18px;
+.send-btn:disabled{
+  opacity:.4;
+  cursor:not-allowed;
 }
 
-textarea{
-    flex:1;
-    resize:none;
-    border:0;
-    outline:0;
-    min-height:40px;
-    max-height:140px;
-    padding:9px 3px;
-    font-size:14px;
-    line-height:1.5;
+.disclaimer{
+  text-align:center;
+  font-size:10px;
+  color:#888;
+  margin-top:7px;
 }
 
-.send{
-    width:40px;
-    height:40px;
-    border:0;
-    border-radius:11px;
-    background:#111;
-    color:#fff;
-    font-size:18px;
-    cursor:pointer;
+/* TYPING */
+
+.typing{
+  display:flex;
+  align-items:center;
+  gap:4px;
 }
 
-.send:disabled{
-    opacity:.35;
-    cursor:not-allowed;
+.dot{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#777;
+  animation:bounce 1.2s infinite;
 }
 
-.note{
-    text-align:center;
-    font-size:10px;
-    color:#999;
-    margin-top:7px;
+.dot:nth-child(2){
+  animation-delay:.15s;
+}
+
+.dot:nth-child(3){
+  animation-delay:.3s;
+}
+
+@keyframes bounce{
+  0%,80%,100%{
+    transform:translateY(0);
+    opacity:.4;
+  }
+
+  40%{
+    transform:translateY(-5px);
+    opacity:1;
+  }
 }
 
 /* MOBILE */
+
 @media(max-width:760px){
 
-    .sidebar{
-        position:fixed;
-        top:0;
-        bottom:0;
-        left:-280px;
-        box-shadow:10px 0 30px rgba(0,0,0,.12);
-    }
-
-    .sidebar.open{
-        left:0;
-    }
-
-    .menu{
-        display:block;
-    }
-
-    .header{
-        padding:0 14px;
-    }
-
-    .chat{
-        padding:22px 12px 150px;
-    }
-
-    .welcome h1{
-        font-size:30px;
-    }
-
-    .welcome p{
-        font-size:13px;
-    }
-
-    .cards{
-        grid-template-columns:1fr;
-    }
-
-    .input-area{
-        left:0;
-        padding:10px;
-    }
-
-    .note{
-        display:none;
-    }
-}
-
-.overlay{
-    display:none;
+  .sidebar{
     position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.25);
-    z-index:90;
-}
+    left:-280px;
+    top:0;
+    bottom:0;
+    box-shadow:8px 0 30px rgba(0,0,0,.16);
+  }
 
-.overlay.show{
+  .sidebar.open{
+    left:0;
+  }
+
+  .menu-btn{
     display:block;
+  }
+
+  .composer-area{
+    left:0;
+    padding:9px 9px 15px;
+  }
+
+  .chat{
+    padding-left:11px;
+    padding-right:11px;
+  }
+
+  .suggestions{
+    grid-template-columns:1fr;
+  }
+
+  .welcome h1{
+    font-size:26px;
+  }
+
+  .message-content{
+    font-size:14px;
+  }
+
+  .header{
+    padding:0 12px;
+  }
+
+  .status{
+    display:none;
+  }
 }
 </style>
 </head>
@@ -582,1631 +525,1279 @@ textarea{
 
 <div class="app">
 
-<!-- SIDEBAR -->
-<aside class="sidebar" id="sidebar">
+  <!-- SIDEBAR -->
 
-    <div class="logo-area">
+  <aside class="sidebar" id="sidebar">
 
-        <img
-            src="file_000000005d7c823096f5a7c818f99a3f.png"
-            alt="ChatGPT"
-        >
+    <div class="brand">
 
-        <strong>ChatGPT</strong>
+      <img
+        class="logo"
+        src="file_000000005d7c823096f5a7c818f99a3f.png"
+        alt="ChatGPT Logo"
+        onerror="this.style.display='none'">
+
+      <div>
+        <div class="brand-title">
+          ChatGPT
+        </div>
+
+        <div class="brand-sub">
+          AI Assistant
+        </div>
+      </div>
 
     </div>
 
-    <button class="new-chat" onclick="newChat()">
-        <span>＋</span>
-        <span>New chat</span>
+
+    <button
+      class="new-chat"
+      onclick="newChat()">
+
+      ＋ New chat
+
     </button>
 
-    <div class="search">
-        🔍
-        <input
-            id="searchHistory"
-            placeholder="Search chats..."
-        >
+
+    <input
+      class="search"
+      id="searchHistory"
+      type="text"
+      placeholder="Search chats..."
+      oninput="searchHistory()">
+
+
+    <div class="history-title">
+      Recent
     </div>
 
-    <div class="history-label">
-        Recent chats
+
+    <div
+      class="history"
+      id="history">
     </div>
 
-    <div class="history" id="history"></div>
 
     <div class="sidebar-footer">
 
-        <b>DEVELOPER VINAY PRIME</b><br>
-        MODERATOR SIDDHARTH<br>
-        CUSTOMIZE BY YASH
+      <b>DEVELOPER VINAY PRIME</b><br>
+      MODERATOR SIDDHARTH<br>
+      CUSTOMIZE BY YASH
 
     </div>
 
-</aside>
-
-<div
-    class="overlay"
-    id="overlay"
-    onclick="closeSidebar()">
-</div>
+  </aside>
 
 
-<!-- MAIN -->
-<main class="main">
+  <!-- MAIN -->
 
-    <!-- HEADER -->
+  <main class="main">
+
     <header class="header">
 
-        <div class="header-left">
+      <div class="header-left">
 
-            <button
-                class="menu"
-                onclick="openSidebar()">
-                ☰
-            </button>
+        <button
+          class="menu-btn"
+          onclick="toggleSidebar()">
+          ☰
+        </button>
 
-            <img
-                class="header-logo"
-                src="file_000000005d7c823096f5a7c818f99a3f.png"
-                alt="ChatGPT"
-            >
-
-            <div>
-
-                <div class="header-name">
-                    ChatGPT
-                </div>
-
-                <div class="online">
-                    ● Online
-                </div>
-
-            </div>
-
+        <div class="header-title">
+          ChatGPT
         </div>
+
+      </div>
+
+      <div class="status">
+        Gemini AI
+      </div>
 
     </header>
 
 
     <!-- CHAT -->
-    <section class="chat" id="chat">
 
-        <div class="chat-inner" id="chatInner">
+    <section
+      class="chat"
+      id="chat">
 
-            <!-- WELCOME -->
-            <div class="welcome" id="welcome">
-
-                <img
-                    class="welcome-logo"
-                    src="file_000000005d7c823096f5a7c818f99a3f.png"
-                    alt="ChatGPT"
-                >
-
-                <h1>
-                    How can I help you?
-                </h1>
-
-                <p>
-                    Ask questions, write code, learn new things,
-                    or upload an image and ask about it.
-                </p>
+      <div
+        class="chat-inner"
+        id="chatInner">
 
 
-                <div class="cards">
+        <!-- WELCOME -->
 
-                    <div
-                        class="card"
-                        onclick="suggest('Explain C programming in simple English with examples')">
+        <div
+          class="welcome"
+          id="welcome">
 
-                        <div class="card-icon">
-                            💡
-                        </div>
+          <img
+            class="welcome-logo"
+            src="file_000000005d7c823096f5a7c818f99a3f.png"
+            alt="ChatGPT"
+            onerror="this.style.display='none'">
 
-                        <b>
-                            Explain something
-                        </b>
+          <h1>
+            How can I help you?
+          </h1>
 
-                        <small>
-                            Learn any topic easily
-                        </small>
-
-                    </div>
-
-
-                    <div
-                        class="card"
-                        onclick="suggest('Create a professional HTML CSS JavaScript website')">
-
-                        <div class="card-icon">
-                            💻
-                        </div>
-
-                        <b>
-                            Write code
-                        </b>
-
-                        <small>
-                            Build and debug projects
-                        </small>
-
-                    </div>
-
-
-                    <div
-                        class="card"
-                        onclick="suggest('Give me creative website project ideas')">
-
-                        <div class="card-icon">
-                            🚀
-                        </div>
-
-                        <b>
-                            Get ideas
-                        </b>
-
-                        <small>
-                            Discover new projects
-                        </small>
-
-                    </div>
-
-
-                    <div
-                        class="card"
-                        onclick="suggest('Explain this topic step by step in Hinglish')">
-
-                        <div class="card-icon">
-                            🧠
-                        </div>
-
-                        <b>
-                            Study help
-                        </b>
-
-                        <small>
-                            Understand step by step
-                        </small>
-
-                    </div>
-
-                </div>
-
-            </div>
+          <p>
+            Ask anything, write code or analyze an image.
+          </p>
 
         </div>
+
+
+        <!-- SUGGESTIONS -->
+
+        <div
+          class="suggestions"
+          id="suggestions">
+
+
+          <button
+            class="suggestion"
+            onclick="useSuggestion('Explain Artificial Intelligence in simple words.')">
+
+            <b>🤖 Explain AI</b>
+
+            <span>
+              Learn artificial intelligence simply
+            </span>
+
+          </button>
+
+
+          <button
+            class="suggestion"
+            onclick="useSuggestion('Write a professional HTML CSS and JavaScript website.')">
+
+            <b>💻 Write Code</b>
+
+            <span>
+              Create a complete website
+            </span>
+
+          </button>
+
+
+          <button
+            class="suggestion"
+            onclick="useSuggestion('Teach me C programming from basic to advanced.')">
+
+            <b>📚 Learn Coding</b>
+
+            <span>
+              Learn programming step by step
+            </span>
+
+          </button>
+
+
+          <button
+            class="suggestion"
+            onclick="useSuggestion('Give me 10 creative website project ideas.')">
+
+            <b>💡 Project Ideas</b>
+
+            <span>
+              Get ideas for your next project
+            </span>
+
+          </button>
+
+
+        </div>
+
+      </div>
 
     </section>
 
 
-    <!-- INPUT -->
-    <div class="input-area">
+    <!-- COMPOSER -->
 
-        <div class="composer">
+    <div class="composer-area">
 
-            <div
-                class="preview"
-                id="preview">
-
-                <div class="preview-wrap">
-
-                    <img id="previewImg">
-
-                    <button
-                        class="remove"
-                        onclick="removeImage()">
-                        ×
-                    </button>
-
-                </div>
-
-            </div>
+      <div class="composer">
 
 
-            <div class="composer-row">
-
-                <button
-                    class="attach"
-                    onclick="document.getElementById('imageInput').click()"
-                    title="Upload image">
-                    ＋
-                </button>
-
-                <input
-                    type="file"
-                    id="imageInput"
-                    accept="image/*"
-                    hidden
-                >
+        <img
+          id="uploadPreview"
+          class="upload-preview"
+          alt="Image preview">
 
 
-                <textarea
-                    id="messageInput"
-                    rows="1"
-                    placeholder="Message ChatGPT..."
-                    oninput="resizeInput(this)"
-                    onkeydown="enterSend(event)"
-                ></textarea>
+        <div class="tools">
 
 
-                <button
-                    class="send"
-                    id="sendBtn"
-                    onclick="sendMessage()">
-                    ↑
-                </button>
+          <button
+            class="icon-btn"
+            title="Upload image"
+            onclick="document.getElementById('imageInput').click()">
 
-            </div>
+            ＋
+
+          </button>
+
+
+          <input
+            type="file"
+            id="imageInput"
+            accept="image/*"
+            hidden
+            onchange="handleImage(event)">
+
+
+          <textarea
+            id="messageInput"
+            rows="1"
+            placeholder="Message ChatGPT..."
+            oninput="autoResize(this)"
+            onkeydown="handleKey(event)"></textarea>
+
+
+          <button
+            class="send-btn"
+            id="sendButton"
+            onclick="sendMessage()">
+
+            ↑
+
+          </button>
+
 
         </div>
 
-        <div class="note">
-            ChatGPT can make mistakes. Check important information.
-        </div>
+      </div>
+
+
+      <div class="disclaimer">
+        AI can make mistakes. Check important information.
+      </div>
 
     </div>
 
-</main>
+  </main>
 
-</div>
+    </div>
+    <script>
 
+/* =====================================================
+   GOOGLE APPS SCRIPT URL
+   =====================================================
 
-<script>
+   YAHAN APNA DEPLOYED APPS SCRIPT /exec URL PASTE KARO.
 
-/*
-====================================================
-PART 2 WILL BE ADDED HERE
-====================================================
-*/
+   Example:
+   https://script.google.com/macros/s/XXXXXXXX/exec
 
-</script>
-
-</body>
-  </html>
-  /* =========================================
-   CHATGPT — VINAY PRIME
-   JAVASCRIPT PART 2/2
-========================================= */
-
-/* =========================
-   GEMINI CONFIG
-========================= */
-
-const API_KEY =
-"AQ.Ab8RN6KtcvGZELoGSXPjsXlqxM6wIAUM79o0LBRtAyUVB0EmFA";
-
-const MODEL = "gemini-2.5-flash";
+   ===================================================== */
 
 const API_URL =
-"https://generativelanguage.googleapis.com/v1beta/models/"
-+ MODEL +
-":generateContent?key="
-+ encodeURIComponent(API_KEY);
+  "https://script.google.com/macros/s/AKfycby1UU4RaemxGYbgNnElPXL1msy-EZOBfDTkbAEYB2XPkjUQ6-i6aJCLAmjVwG7m8TgJFA/exec";
 
 
-/* =========================
+/* =====================================================
    VARIABLES
-========================= */
+   ===================================================== */
 
-const chat = document.getElementById("chat");
-const chatInner = document.getElementById("chatInner");
+let selectedImageBase64 = "";
+let selectedImageMime = "";
 
-const messageInput =
-document.getElementById("messageInput");
-
-const sendBtn =
-document.getElementById("sendBtn");
-
-const imageInput =
-document.getElementById("imageInput");
-
-const preview =
-document.getElementById("preview");
-
-const previewImg =
-document.getElementById("previewImg");
-
-const historyBox =
-document.getElementById("history");
-
-const searchHistory =
-document.getElementById("searchHistory");
-
-let selectedImage = null;
-
-let messages = [];
-
-let currentTitle = "New chat";
-
-
-/* =========================
-   INITIAL STATE
-========================= */
-
-sendBtn.disabled = true;
-
-renderHistory();
-
-
-/* =========================
-   TEXTAREA
-========================= */
-
-function resizeInput(el){
-
-    el.style.height = "auto";
-
-    el.style.height =
-        Math.min(el.scrollHeight,140) + "px";
-
-    updateSendButton();
-}
-
-
-function enterSend(event){
-
-    if(
-        event.key === "Enter" &&
-        !event.shiftKey
-    ){
-
-        event.preventDefault();
-
-        sendMessage();
-
-    }
-
-}
-
-
-/* =========================
-   SEND BUTTON STATE
-========================= */
-
-function updateSendButton(){
-
-    sendBtn.disabled =
-        !messageInput.value.trim() &&
-        !selectedImage;
-
-}
-
-
-/* =========================
-   SUGGESTION
-========================= */
-
-function suggest(text){
-
-    messageInput.value = text;
-
-    resizeInput(messageInput);
-
-    messageInput.focus();
-
-}
-
-
-/* =========================
-   IMAGE UPLOAD
-========================= */
-
-imageInput.addEventListener(
-    "change",
-    function(){
-
-        const file = this.files[0];
-
-        if(!file){
-            return;
-        }
-
-        if(!file.type.startsWith("image/")){
-
-            alert(
-                "Please select an image file."
-            );
-
-            this.value = "";
-
-            return;
-        }
-
-        selectedImage = file;
-
-        const reader =
-            new FileReader();
-
-        reader.onload = function(e){
-
-            previewImg.src =
-                e.target.result;
-
-            preview.style.display =
-                "block";
-
-            updateSendButton();
-
-        };
-
-        reader.readAsDataURL(file);
-
-    }
+let chats = JSON.parse(
+  localStorage.getItem("vinay_prime_chats") || "[]"
 );
 
 
-function removeImage(){
+/* =====================================================
+   START
+   ===================================================== */
 
-    selectedImage = null;
+document.addEventListener("DOMContentLoaded", function(){
 
-    imageInput.value = "";
+  loadHistory();
 
-    previewImg.src = "";
+  document
+    .getElementById("messageInput")
+    .focus();
 
-    preview.style.display =
-        "none";
-
-    updateSendButton();
-
-}
+});
 
 
-/* =========================
-   MOBILE SIDEBAR
-========================= */
+/* =====================================================
+   SIDEBAR
+   ===================================================== */
 
-function openSidebar(){
+function toggleSidebar(){
 
-    document
-        .getElementById("sidebar")
-        .classList.add("open");
-
-    document
-        .getElementById("overlay")
-        .classList.add("show");
+  document
+    .getElementById("sidebar")
+    .classList.toggle("open");
 
 }
 
 
-function closeSidebar(){
-
-    document
-        .getElementById("sidebar")
-        .classList.remove("open");
-
-    document
-        .getElementById("overlay")
-        .classList.remove("show");
-
-}
-
-
-/* =========================
+/* =====================================================
    NEW CHAT
-========================= */
+   ===================================================== */
 
 function newChat(){
 
-    messages = [];
+  const chatInner =
+    document.getElementById("chatInner");
 
-    currentTitle =
-        "New chat";
+  chatInner.innerHTML = `
 
-    chatInner.innerHTML = `
+    <div class="welcome" id="welcome">
 
-        <div class="welcome" id="welcome">
+      <img
+        class="welcome-logo"
+        src="file_000000005d7c823096f5a7c818f99a3f.png"
+        alt="ChatGPT"
+        onerror="this.style.display='none'">
 
-            <img
-                class="welcome-logo"
-                src="file_000000005d7c823096f5a7c818f99a3f.png"
-            >
+      <h1>
+        How can I help you?
+      </h1>
 
-            <h1>
-                How can I help you?
-            </h1>
+      <p>
+        Ask anything, write code or analyze an image.
+      </p>
 
-            <p>
-                Ask questions, write code, learn new things,
-                or upload an image and ask about it.
-            </p>
+    </div>
 
-            <div class="cards">
 
-                <div
-                    class="card"
-                    onclick="suggest('Explain C programming in simple English with examples')">
+    <div
+      class="suggestions"
+      id="suggestions">
 
-                    <div class="card-icon">💡</div>
 
-                    <b>Explain something</b>
+      <button
+        class="suggestion"
+        onclick="useSuggestion('Explain Artificial Intelligence in simple words.')">
 
-                    <small>
-                        Learn any topic easily
-                    </small>
+        <b>🤖 Explain AI</b>
 
-                </div>
+        <span>
+          Learn artificial intelligence simply
+        </span>
 
-                <div
-                    class="card"
-                    onclick="suggest('Create a professional HTML CSS JavaScript website')">
+      </button>
 
-                    <div class="card-icon">💻</div>
 
-                    <b>Write code</b>
+      <button
+        class="suggestion"
+        onclick="useSuggestion('Write a professional HTML CSS and JavaScript website.')">
 
-                    <small>
-                        Build and debug projects
-                    </small>
+        <b>💻 Write Code</b>
 
-                </div>
+        <span>
+          Create a complete website
+        </span>
 
-                <div
-                    class="card"
-                    onclick="suggest('Give me creative website project ideas')">
+      </button>
 
-                    <div class="card-icon">🚀</div>
 
-                    <b>Get ideas</b>
+      <button
+        class="suggestion"
+        onclick="useSuggestion('Teach me C programming from basic to advanced.')">
 
-                    <small>
-                        Discover new projects
-                    </small>
+        <b>📚 Learn Coding</b>
 
-                </div>
+        <span>
+          Learn programming step by step
+        </span>
 
-                <div
-                    class="card"
-                    onclick="suggest('Explain this topic step by step in Hinglish')">
+      </button>
 
-                    <div class="card-icon">🧠</div>
 
-                    <b>Study help</b>
+      <button
+        class="suggestion"
+        onclick="useSuggestion('Give me 10 creative website project ideas.')">
 
-                    <small>
-                        Understand step by step
-                    </small>
+        <b>💡 Project Ideas</b>
 
-                </div>
+        <span>
+          Get ideas for your next project
+        </span>
 
-            </div>
+      </button>
 
-        </div>
-    `;
 
-    messageInput.value = "";
+    </div>
 
-    messageInput.style.height =
-        "40px";
+  `;
 
-    removeImage();
 
-    updateSendButton();
+  selectedImageBase64 = "";
+  selectedImageMime = "";
 
-    closeSidebar();
+  const preview =
+    document.getElementById("uploadPreview");
+
+  preview.src = "";
+  preview.style.display = "none";
+
+
+  const input =
+    document.getElementById("messageInput");
+
+  input.value = "";
+  input.style.height = "auto";
+
+
+  const imageInput =
+    document.getElementById("imageInput");
+
+  imageInput.value = "";
+
+
+  document
+    .getElementById("sidebar")
+    .classList.remove("open");
 
 }
 
 
-/* =========================
+/* =====================================================
+   SUGGESTION
+   ===================================================== */
+
+function useSuggestion(text){
+
+  const input =
+    document.getElementById("messageInput");
+
+  input.value = text;
+
+  autoResize(input);
+
+  sendMessage();
+
+}
+
+
+/* =====================================================
+   IMAGE UPLOAD
+   ===================================================== */
+
+function handleImage(event){
+
+  const file =
+    event.target.files[0];
+
+  if(!file){
+    return;
+  }
+
+
+  if(!file.type.startsWith("image/")){
+
+    alert("Please select an image.");
+
+    event.target.value = "";
+
+    return;
+  }
+
+
+  if(file.size > 6 * 1024 * 1024){
+
+    alert("Image size should be below 6 MB.");
+
+    event.target.value = "";
+
+    return;
+  }
+
+
+  selectedImageMime =
+    file.type;
+
+
+  const reader =
+    new FileReader();
+
+
+  reader.onload = function(e){
+
+    const result =
+      e.target.result;
+
+
+    selectedImageBase64 =
+      result.split(",")[1];
+
+
+    const preview =
+      document.getElementById("uploadPreview");
+
+
+    preview.src =
+      result;
+
+    preview.style.display =
+      "block";
+
+  };
+
+
+  reader.readAsDataURL(file);
+
+}
+
+
+/* =====================================================
    SEND MESSAGE
-========================= */
+   ===================================================== */
 
 async function sendMessage(){
 
-    const text =
-        messageInput.value.trim();
-
-    if(!text && !selectedImage){
-
-        return;
-    }
+  const input =
+    document.getElementById("messageInput");
 
 
-    sendBtn.disabled = true;
+  const message =
+    input.value.trim();
 
 
-    let imageInfo = null;
-
-    let imageURL = null;
-
-
-    /* IMAGE */
-    if(selectedImage){
-
-        imageInfo =
-            await convertImage(
-                selectedImage
-            );
-
-        imageURL =
-            URL.createObjectURL(
-                selectedImage
-            );
-
-    }
+  if(
+    !message &&
+    !selectedImageBase64
+  ){
+    return;
+  }
 
 
-    /* REMOVE WELCOME */
-    const welcome =
-        document.getElementById(
-            "welcome"
-        );
+  /* CHECK URL */
 
-    if(welcome){
-        welcome.remove();
-    }
+  if(
+    API_URL.includes("PASTE_YOUR") ||
+    !API_URL.startsWith("https://")
+  ){
 
-
-    /* USER MESSAGE */
-    addUserMessage(
-        text ||
-        "Please analyze this image.",
-        imageURL
+    alert(
+      "Pehle API_URL me Google Apps Script ka /exec URL paste karo."
     );
 
-
-    /* SAVE CONVERSATION */
-    messages.push({
-
-        role:"user",
-
-        text:
-            text ||
-            "Please analyze this image.",
-
-        image:imageInfo
-
-    });
+    return;
+  }
 
 
-    /* TITLE */
-    if(currentTitle === "New chat"){
+  /* REMOVE WELCOME */
 
-        currentTitle =
-            text
-                ? text.substring(0,40)
-                : "Image analysis";
+  const welcome =
+    document.getElementById("welcome");
 
-        saveHistory(
-            currentTitle
-        );
-
-    }
+  const suggestions =
+    document.getElementById("suggestions");
 
 
-    /* CLEAR INPUT */
-    messageInput.value = "";
+  if(welcome){
+    welcome.remove();
+  }
 
-    messageInput.style.height =
-        "40px";
+  if(suggestions){
+    suggestions.remove();
+  }
 
-    removeImage();
+
+  /* SAVE CURRENT IMAGE */
+
+  const image =
+    selectedImageBase64;
+
+  const mime =
+    selectedImageMime;
 
 
-    /* TYPING */
-    showTyping();
+  /* USER MESSAGE */
+
+  addMessage(
+    "user",
+    message || "Please analyze this image.",
+    image
+  );
+
+
+  /* CLEAR INPUT */
+
+  input.value = "";
+
+  input.style.height = "auto";
+
+
+  selectedImageBase64 = "";
+  selectedImageMime = "";
+
+
+  const preview =
+    document.getElementById("uploadPreview");
+
+  preview.src = "";
+  preview.style.display = "none";
+
+
+  document.getElementById("imageInput").value = "";
+
+
+  /* BUTTON */
+
+  const sendButton =
+    document.getElementById("sendButton");
+
+  sendButton.disabled = true;
+
+
+  /* TYPING */
+
+  const loadingId =
+    showLoading();
+
+
+  try{
+
+    const response =
+      await fetch(
+        API_URL,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "text/plain;charset=utf-8"
+          },
+
+          body: JSON.stringify({
+
+            message: message,
+
+            image: image || "",
+
+            mimeType: mime || ""
+
+          })
+
+        }
+      );
+
+
+    const responseText =
+      await response.text();
+
+
+    let data;
 
 
     try{
 
-        const answer =
-            await askGemini();
-
-
-        removeTyping();
-
-
-        addAIMessage(answer);
-
-
-        messages.push({
-
-            role:"model",
-
-            text:answer,
-
-            image:null
-
-        });
-
+      data =
+        JSON.parse(responseText);
 
     }
     catch(error){
 
-        removeTyping();
-
-        addAIMessage(
-`Sorry, I couldn't get a response.
-
-Error:
-${error.message}
-
-Please check your Gemini API key, model name, internet connection, and API access.`
-        );
+      throw new Error(
+        "Invalid response from Google Apps Script."
+      );
 
     }
 
 
-    updateSendButton();
+    removeLoading(loadingId);
 
-}
 
+    /* ERROR */
 
-/* =========================
-   GEMINI API
-========================= */
+    if(!data.success){
 
-async function askGemini(){
-
-    const contents = [];
-
-
-    for(const msg of messages){
-
-        const parts = [];
-
-
-        if(msg.text){
-
-            parts.push({
-
-                text:msg.text
-
-            });
-
-        }
-
-
-        if(msg.image){
-
-            parts.push({
-
-                inline_data:{
-
-                    mime_type:
-                        msg.image.mime,
-
-                    data:
-                        msg.image.data
-
-                }
-
-            });
-
-        }
-
-
-        contents.push({
-
-            role:
-                msg.role === "model"
-                    ? "model"
-                    : "user",
-
-            parts:parts
-
-        });
-
-    }
-
-
-    const requestBody = {
-
-        systemInstruction:{
-
-            parts:[{
-
-                text:
-`You are ChatGPT, a helpful AI assistant on a website created by VINAY PRIME.
-
-Answer clearly and naturally.
-
-The user can communicate in Hindi, Hinglish or English.
-If the user writes Hinglish, simple Hinglish is preferred.
-
-You can:
-- answer general questions
-- explain school topics
-- write programming code
-- debug code
-- create website code
-- analyze uploaded images
-- explain uploaded images
-- help with projects
-
-For programming requests, provide useful complete code when appropriate.
-
-Always put programming code inside Markdown code blocks.
-
-Do not generate images.
-If an image is uploaded, analyze it and answer questions about it.
-
-Keep answers organized and easy to understand.`
-            }]
-
-        },
-
-        contents:contents,
-
-        generationConfig:{
-
-            temperature:0.7,
-
-            topP:0.95,
-
-            maxOutputTokens:4096
-
-        }
-
-    };
-
-
-    const response =
-        await fetch(
-            API_URL,
-            {
-
-                method:"POST",
-
-                headers:{
-
-                    "Content-Type":
-                        "application/json"
-
-                },
-
-                body:
-                    JSON.stringify(
-                        requestBody
-                    )
-
-            }
-        );
-
-
-    let data = null;
-
-
-    try{
-
-        data =
-            await response.json();
-
-    }
-    catch{
-
-        throw new Error(
-            "Invalid response from server."
-        );
-
-    }
-
-
-    if(!response.ok){
-
-        const apiError =
-            data?.error?.message ||
-            "Gemini API request failed.";
-
-        throw new Error(
-            apiError
-        );
-
-    }
-
-
-    const answer =
-        data?.candidates?.[0]
-        ?.content?.parts
-        ?.map(
-            part => part.text || ""
+      addMessage(
+        "ai",
+        "⚠️ " +
+        (
+          data.error ||
+          "Something went wrong."
         )
-        .join("")
-        .trim();
+      );
 
-
-    if(!answer){
-
-        throw new Error(
-            "AI returned an empty response."
-        );
-
+      return;
     }
 
 
-    return answer;
+    /* AI ANSWER */
 
-}
-
-
-/* =========================
-   IMAGE → BASE64
-========================= */
-
-function convertImage(file){
-
-    return new Promise(
-        (resolve,reject)=>{
-
-            const reader =
-                new FileReader();
-
-            reader.onload =
-                function(){
-
-                    const result =
-                        reader.result;
-
-                    const comma =
-                        result.indexOf(",");
-
-                    resolve({
-
-                        mime:file.type,
-
-                        data:
-                            result.substring(
-                                comma + 1
-                            )
-
-                    });
-
-                };
-
-            reader.onerror =
-                function(){
-
-                    reject(
-                        new Error(
-                            "Image could not be read."
-                        )
-                    );
-
-                };
-
-            reader.readAsDataURL(file);
-
-        }
-    );
-
-}
-
-
-/* =========================
-   USER MESSAGE
-========================= */
-
-function addUserMessage(
-    text,
-    imageURL
-){
-
-    const message =
-        document.createElement(
-            "div"
-        );
-
-    message.className =
-        "message";
-
-
-    let imageHTML = "";
-
-
-    if(imageURL){
-
-        imageHTML = `
-
-            <img
-                class="chat-image"
-                src="${imageURL}"
-                alt="Uploaded image"
-            >
-
-        `;
-
-    }
-
-
-    message.innerHTML = `
-
-        <div class="avatar user-avatar">
-            YOU
-        </div>
-
-        <div class="message-body">
-
-            <div class="message-name">
-                You
-            </div>
-
-            <div class="message-text">
-                ${escapeHTML(text)}
-            </div>
-
-            ${imageHTML}
-
-        </div>
-    `;
-
-
-    chatInner.appendChild(
-        message
+    addMessage(
+      "ai",
+      data.answer
     );
 
 
-    scrollBottom();
+    /* HISTORY */
+
+    saveChat(
+      message || "Image analysis",
+      data.answer
+    );
+
+  }
+  catch(error){
+
+    removeLoading(loadingId);
+
+
+    addMessage(
+      "ai",
+
+      "⚠️ Connection error\n\n" +
+
+      error.message +
+
+      "\n\n" +
+
+      "Check these things:\n" +
+
+      "1. Apps Script is deployed as Web App\n" +
+
+      "2. Access is set to Anyone\n" +
+
+      "3. Correct /exec URL is used\n" +
+
+      "4. GEMINI_API_KEY is added in Script Properties"
+
+    );
+
+  }
+  finally{
+
+    sendButton.disabled =
+      false;
+
+  }
 
 }
 
 
-/* =========================
-   AI MESSAGE
-========================= */
+/* =====================================================
+   ADD MESSAGE
+   ===================================================== */
 
-function addAIMessage(text){
+function addMessage(
+  role,
+  text,
+  imageBase64 = ""
+){
 
-    const message =
-        document.createElement(
-            "div"
+  const chatInner =
+    document.getElementById("chatInner");
+
+
+  const message =
+    document.createElement("div");
+
+
+  message.className =
+    "message " + role;
+
+
+  /* AVATAR */
+
+  const avatar =
+    document.createElement("div");
+
+
+  avatar.className =
+    "avatar";
+
+
+  avatar.textContent =
+    role === "user"
+      ? "You"
+      : "AI";
+
+
+  /* CONTENT */
+
+  const content =
+    document.createElement("div");
+
+
+  content.className =
+    "message-content";
+
+
+  /* NAME */
+
+  const name =
+    document.createElement("div");
+
+
+  name.className =
+    "message-name";
+
+
+  name.textContent =
+    role === "user"
+      ? "You"
+      : "ChatGPT";
+
+
+  content.appendChild(name);
+
+
+  /* IMAGE */
+
+  if(imageBase64){
+
+    const image =
+      document.createElement("img");
+
+
+    image.className =
+      "message-image";
+
+
+    image.src =
+      "data:image/*;base64," +
+      imageBase64;
+
+
+    image.alt =
+      "Uploaded image";
+
+
+    content.appendChild(image);
+
+  }
+
+
+  /* TEXT */
+
+  const textElement =
+    document.createElement("div");
+
+
+  textElement.innerHTML =
+    formatText(text);
+
+
+  content.appendChild(textElement);
+
+
+  message.appendChild(avatar);
+
+  message.appendChild(content);
+
+
+  chatInner.appendChild(message);
+
+
+  scrollToBottom();
+
+}
+
+
+/* =====================================================
+   FORMAT TEXT
+   ===================================================== */
+
+function formatText(text){
+
+  if(!text){
+    return "";
+  }
+
+
+  let safe =
+    String(text);
+
+
+  /* ESCAPE HTML */
+
+  safe =
+    safe
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;");
+
+
+  /* CODE BLOCK */
+
+  safe =
+    safe.replace(
+      /```(?:[a-zA-Z0-9_+#.-]+)?\s*([\s\S]*?)```/g,
+
+      function(match, code){
+
+        return (
+          "<pre><code>" +
+          code.trim() +
+          "</code></pre>"
         );
 
-    message.className =
-        "message";
-
-
-    message.innerHTML = `
-
-        <img
-            class="avatar"
-            src="file_000000005d7c823096f5a7c818f99a3f.png"
-            alt="AI"
-        >
-
-        <div class="message-body">
-
-            <div class="message-name">
-                ChatGPT
-            </div>
-
-            <div
-                class="message-text"
-                id="ai-${Date.now()}"
-            ></div>
-
-        </div>
-    `;
-
-
-    chatInner.appendChild(
-        message
+      }
     );
 
 
-    const textBox =
-        message.querySelector(
-            ".message-text"
-        );
+  /* INLINE CODE */
 
+  safe =
+    safe.replace(
+      /`([^`]+)`/g,
 
-    typeResponse(
-        textBox,
-        text
-    );
-
-}
-
-
-/* =========================
-   AI TYPING EFFECT
-========================= */
-
-function typeResponse(
-    element,
-    text
-){
-
-    const parts =
-        parseMarkdownCode(
-            text
-        );
-
-
-    let index = 0;
-
-
-    function nextPart(){
-
-        if(index >= parts.length){
-
-            scrollBottom();
-
-            return;
-        }
-
-
-        const part =
-            parts[index];
-
-
-        if(part.type === "text"){
-
-            typeText(
-                element,
-                part.text,
-                function(){
-
-                    index++;
-
-                    nextPart();
-
-                }
-            );
-
-        }
-        else{
-
-            element.insertAdjacentHTML(
-                "beforeend",
-                createCode(
-                    part.language,
-                    part.code
-                )
-            );
-
-            index++;
-
-            scrollBottom();
-
-            setTimeout(
-                nextPart,
-                80
-            );
-
-        }
-
-    }
-
-
-    nextPart();
-
-}
-
-
-/* =========================
-   TEXT TYPING
-========================= */
-
-function typeText(
-    element,
-    text,
-    done
-){
-
-    let i = 0;
-
-    const speed = 6;
-
-
-    function write(){
-
-        if(i >= text.length){
-
-            done();
-
-            return;
-        }
-
-
-        element.appendChild(
-            document.createTextNode(
-                text.charAt(i)
-            )
-        );
-
-
-        i++;
-
-        scrollBottom();
-
-
-        setTimeout(
-            write,
-            speed
-        );
-
-    }
-
-
-    write();
-
-}
-
-
-/* =========================
-   CODE PARSER
-========================= */
-
-function parseMarkdownCode(text){
-
-    const regex =
-        /```([\w#+.-]*)\s*\n?([\s\S]*?)```/g;
-
-
-    const result = [];
-
-    let last = 0;
-
-    let match;
-
-
-    while(
-        (match = regex.exec(text))
-        !== null
-    ){
-
-        if(match.index > last){
-
-            result.push({
-
-                type:"text",
-
-                text:
-                    text.substring(
-                        last,
-                        match.index
-                    )
-
-            });
-
-        }
-
-
-        result.push({
-
-            type:"code",
-
-            language:
-                match[1] || "code",
-
-            code:
-                match[2].trim()
-
-        });
-
-
-        last =
-            regex.lastIndex;
-
-    }
-
-
-    if(last < text.length){
-
-        result.push({
-
-            type:"text",
-
-            text:
-                text.substring(last)
-
-        });
-
-    }
-
-
-    return result;
-
-}
-
-
-/* =========================
-   CODE BOX
-========================= */
-
-function createCode(
-    language,
-    code
-){
-
-    const id =
-        "code_" +
-        Date.now() +
-        "_" +
-        Math.floor(
-            Math.random()*10000
-        );
-
-
-    window[id] = code;
-
-
-    return `
-
-        <div class="code">
-
-            <div class="code-top">
-
-                <span>
-                    ${escapeHTML(language)}
-                </span>
-
-                <button
-                    class="copy"
-                    onclick="copyCode('${id}',this)"
-                >
-                    Copy
-                </button>
-
-            </div>
-
-            <pre>${escapeHTML(code)}</pre>
-
-        </div>
-
-    `;
-
-}
-
-
-/* =========================
-   COPY CODE
-========================= */
-
-async function copyCode(
-    id,
-    button
-){
-
-    const code =
-        window[id];
-
-
-    try{
-
-        await navigator.clipboard
-            .writeText(code);
-
-
-        const old =
-            button.textContent;
-
-
-        button.textContent =
-            "Copied!";
-
-
-        setTimeout(
-            ()=>{
-                button.textContent =
-                    old;
-            },
-            1200
-        );
-
-    }
-    catch{
-
-        alert(
-            "Could not copy code."
-        );
-
-    }
-
-}
-
-
-/* =========================
-   TYPING INDICATOR
-========================= */
-
-function showTyping(){
-
-    const message =
-        document.createElement(
-            "div"
-        );
-
-    message.className =
-        "message";
-
-    message.id =
-        "typing";
-
-
-    message.innerHTML = `
-
-        <img
-            class="avatar"
-            src="file_000000005d7c823096f5a7c818f99a3f.png"
-        >
-
-        <div class="message-body">
-
-            <div class="message-name">
-                ChatGPT
-            </div>
-
-            <div class="typing">
-
-                <i></i>
-                <i></i>
-                <i></i>
-
-            </div>
-
-        </div>
-    `;
-
-
-    chatInner.appendChild(
-        message
+      '<span class="inline-code">$1</span>'
     );
 
 
-    scrollBottom();
+  /* BOLD */
 
-}
+  safe =
+    safe.replace(
+      /\*\*(.*?)\*\*/g,
 
-
-function removeTyping(){
-
-    const typing =
-        document.getElementById(
-            "typing"
-        );
-
-
-    if(typing){
-
-        typing.remove();
-
-    }
-
-}
-
-
-/* =========================
-   HISTORY
-========================= */
-
-function saveHistory(title){
-
-    let history =
-        JSON.parse(
-            localStorage.getItem(
-                "vinay_chat_history"
-            ) || "[]"
-        );
-
-
-    history =
-        history.filter(
-            x => x !== title
-        );
-
-
-    history.unshift(title);
-
-
-    history =
-        history.slice(0,30);
-
-
-    localStorage.setItem(
-        "vinay_chat_history",
-        JSON.stringify(history)
+      "<strong>$1</strong>"
     );
 
 
-    renderHistory();
+  /* HEADINGS */
+
+  safe =
+    safe.replace(
+      /^### (.*)$/gm,
+
+      "<strong>$1</strong>"
+    );
+
+
+  safe =
+    safe.replace(
+      /^## (.*)$/gm,
+
+      "<strong>$1</strong>"
+    );
+
+
+  /* LINE BREAK */
+
+  safe =
+    safe.replace(
+      /\n/g,
+      "<br>"
+    );
+
+
+  return safe;
 
 }
 
 
-function renderHistory(
-    filter = ""
-){
+/* =====================================================
+   LOADING
+   ===================================================== */
 
-    let history =
-        JSON.parse(
-            localStorage.getItem(
-                "vinay_chat_history"
-            ) || "[]"
-        );
+function showLoading(){
+
+  const id =
+    "loading-" + Date.now();
 
 
-    historyBox.innerHTML = "";
+  const chatInner =
+    document.getElementById("chatInner");
 
 
-    const filtered =
-        history.filter(
-            title =>
-                title
-                .toLowerCase()
-                .includes(
-                    filter.toLowerCase()
-                )
-        );
+  const message =
+    document.createElement("div");
 
 
-    if(filtered.length === 0){
-
-        historyBox.innerHTML = `
-
-            <div class="no-history">
-                No chats found
-            </div>
-
-        `;
-
-        return;
-
-    }
+  message.className =
+    "message ai";
 
 
-    filtered.forEach(title=>{
-
-        const item =
-            document.createElement(
-                "div"
-            );
+  message.id =
+    id;
 
 
-        item.className =
-            "history-item";
+  message.innerHTML = `
+
+    <div class="avatar">
+      AI
+    </div>
+
+    <div class="message-content">
+
+      <div class="message-name">
+        ChatGPT
+      </div>
+
+      <div class="typing">
+
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+
+      </div>
+
+    </div>
+
+  `;
 
 
-        item.textContent =
-            title;
+  chatInner.appendChild(message);
 
 
-        item.onclick =
-            function(){
-
-                closeSidebar();
-
-                alert(
-                    "Saved chat: " +
-                    title
-                );
-
-            };
+  scrollToBottom();
 
 
-        historyBox.appendChild(
-            item
-        );
+  return id;
+
+}
+
+
+function removeLoading(id){
+
+  const element =
+    document.getElementById(id);
+
+
+  if(element){
+    element.remove();
+  }
+
+}
+
+
+/* =====================================================
+   SCROLL
+   ===================================================== */
+
+function scrollToBottom(){
+
+  const chat =
+    document.getElementById("chat");
+
+
+  setTimeout(function(){
+
+    chat.scrollTo({
+
+      top: chat.scrollHeight,
+
+      behavior: "smooth"
 
     });
 
+  },50);
+
 }
 
 
-/* =========================
-   SEARCH HISTORY
-========================= */
+/* =====================================================
+   TEXTAREA
+   ===================================================== */
 
-searchHistory.addEventListener(
-    "input",
-    function(){
+function autoResize(element){
 
-        renderHistory(
-            this.value
-        );
+  element.style.height =
+    "auto";
+
+
+  element.style.height =
+    Math.min(
+      element.scrollHeight,
+      140
+    ) + "px";
+
+}
+
+
+function handleKey(event){
+
+  if(
+    event.key === "Enter" &&
+    !event.shiftKey
+  ){
+
+    event.preventDefault();
+
+    sendMessage();
+
+  }
+
+}
+
+
+/* =====================================================
+   CHAT HISTORY
+   ===================================================== */
+
+function saveChat(
+  question,
+  answer
+){
+
+  chats.unshift({
+
+    question: question,
+
+    answer: answer,
+
+    time: Date.now()
+
+  });
+
+
+  chats =
+    chats.slice(0,30);
+
+
+  localStorage.setItem(
+    "vinay_prime_chats",
+    JSON.stringify(chats)
+  );
+
+
+  loadHistory();
+
+}
+
+
+function loadHistory(){
+
+  const history =
+    document.getElementById("history");
+
+
+  if(!history){
+    return;
+  }
+
+
+  history.innerHTML = "";
+
+
+  chats.forEach(
+    function(chat,index){
+
+      const item =
+        document.createElement("div");
+
+
+      item.className =
+        "history-item";
+
+
+      item.textContent =
+        chat.question;
+
+
+      item.onclick =
+        function(){
+
+          restoreChat(index);
+
+        };
+
+
+      history.appendChild(item);
 
     }
-);
+  );
+
+}
 
 
-/* =========================
-   HTML ESCAPE
-========================= */
+/* =====================================================
+   RESTORE CHAT
+   ===================================================== */
 
-function escapeHTML(value){
+function restoreChat(index){
 
-    return String(value)
+  const chat =
+    chats[index];
 
-        .replace(
-            /&/g,
-           
+
+  if(!chat){
+    return;
+  }
+
+
+  const chatInner =
+    document.getElementById("chatInner");
+
+
+  chatInner.innerHTML =
+    "";
+
+
+  addMessage(
+    "user",
+    chat.question
+  );
+
+
+  addMessage(
+    "ai",
+    chat.answer
+  );
+
+
+  document
+    .getElementById("sidebar")
+    .classList.remove("open");
+
+}
+
+
+/* =====================================================
+   SEARCH HISTORY
+   ===================================================== */
+
+function searchHistory(){
+
+  const search =
+    document
+      .getElementById("searchHistory")
+      .value
+      .toLowerCase();
+
+
+  const items =
+    document.querySelectorAll(
+      ".history-item"
+    );
+
+
+  items.forEach(
+    function(item){
+
+      const text =
+        item.textContent
+          .toLowerCase();
+
+
+      item.style.display =
+        text.includes(search)
+          ? "block"
+          : "none";
+
+    }
+  );
+
+}
+
+</script>
+
+</body>
+</html>
+
+बस आखिरी काम
+
+Is line ko replace karna hai:
+
+const API_URL =
+  "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
+
+Apne Google Apps Script ke "/exec" URL se.
+
+API key "index.html" mein bilkul mat डालना. API key sirf Apps Script ke Script Properties → "GEMINI_API_KEY" mein rahegi.
